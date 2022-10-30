@@ -7,15 +7,26 @@
     <title>To do Lists</title>
 
     <link rel="stylesheet" href="./sass/main.scss" />
+
+    <script defer src="./js/main.js"></script>
   </head>
   <body>
     <header>
       <h1>To do</h1>
     </header>
-    <section id="add-task"></section>
-    <section id="ongoing-tasks-container">
-      <article class="ongoing-task">Ongoing Placeholder</article>
+    
+    <section id="add-task">
+      <button id="new-btn">Ny to-do</button>
+
     </section>
+
+    <section id="ongoing-tasks-container">
+      <article class="ongoing-task">
+        <input class="checkbox" type="checkbox">Ongoing Placeholder
+        <button>Ta bort</button>
+      </article>
+    </section>
+
     <section id="completed-tasks-container">
       <article class="completed-task">Completed Placeholder</article>
     </section>

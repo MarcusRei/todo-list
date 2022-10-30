@@ -1,0 +1,15 @@
+#ongoing-tasks-container {
+    display: flex;
+    justify-content: center;
+    border: 2px solid black;
+    width: 80%;
+    padding: 3em;
+
+    .ongoing-task {
+        display: flex;
+        gap: 1em;
+    }
+
+    .checkbox {
+    }
+}

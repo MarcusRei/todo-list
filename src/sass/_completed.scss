@@ -1,5 +1,15 @@
-.completed-task {
-  text-decoration: line-through;
-  color: grey;
-  border: 2px solid black;
+#completed-tasks-container {
+  display: flex;
+    justify-content: center;
+    border: 2px solid black;
+    width: 80%;
+    padding: 3em;
+
+    .completed-task {
+      text-decoration: line-through;
+      color: grey;
+      border: 2px solid black;
+    }
 }
+
+

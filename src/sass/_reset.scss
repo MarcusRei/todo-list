@@ -1,0 +1,12 @@
+@use "variables" as var;
+
+body {
+    margin: 0;
+    background-color: var.$color-primary-dark;
+    color: #ECE5F0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
