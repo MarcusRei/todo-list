@@ -1,5 +1,10 @@
 #add-task {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 1em;
+}
+
+
+.hide {
+    display: none;
 }

@@ -1,17 +1,21 @@
-#completed-tasks-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: 2px solid black;
-    width: 80%;
-    padding: 3em;
+@use "variables" as var;
 
-    .completed-task {
-      text-decoration: line-through;
-      color: grey;
-      border: 2px solid black;
-    }
+#completed-tasks-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  border: 2px solid black;
+  padding: 2em;
+  width: 80%;
+
+
+  .completed-task {
+    display:flex;
+    flex-direction: row;
+    text-decoration: line-through;
+    color: grey;
+  }
 }
 
 

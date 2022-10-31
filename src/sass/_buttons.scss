@@ -1,0 +1,28 @@
+@use "variables" as var;
+@use "mixins" as mix;
+
+#new-btn {
+    border: none;
+    border-radius: 5px;
+    height: 4em;
+    width: 15em;
+    font-weight: bold;
+}
+
+.remove-btn {
+    background-color: var.$color-accent-red;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    height: 2em;
+    width: 6em;
+}
+
+.add-btn {
+    background-color: var.$color-accent-blue;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    height: 2em;
+    width: 6em;
+}

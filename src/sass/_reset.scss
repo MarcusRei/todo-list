@@ -1,5 +1,9 @@
 @use "variables" as var;
 
+html {
+    font-family: 'Raleway', sans-serif;
+}
+
 body {
     margin: 0;
     background-color: var.$color-primary-dark;
@@ -9,4 +13,5 @@ body {
     justify-content: center;
     align-items: center;
     gap: 1em;
+    overflow: hidden;
 }
