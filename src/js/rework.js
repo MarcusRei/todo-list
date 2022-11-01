@@ -1,10 +1,57 @@
 let newButton = document.getElementById("new-btn");
 let addTaskSection = document.getElementById("add-task");
 
-newButton.addEventListener("click", newTodo);
+newButton.addEventListener("click", newTask);
+
+function newTask() {
+    //Skapar input-fält
+    let newInput = document.createElement("input");
+    addTaskSection.appendChild(newInput);
+
+    //Skapar Lägg till-knapp
+    let addButton = document.createElement("button");
+    addButton.innerText = "Lägg till";
+    addTaskSection.appendChild(addButton)
+    addButton.className = "add-btn";
+    addButton.addEventListener("click", commitTask);
+
+    //Skapar ta bort-knapp
+    let removeButton = document.createElement("button");
+    removeButton.innerText = "Ångra";
+    addTaskSection.appendChild(removeButton);
+    removeButton.className = "remove-btn";
+    removeButton.addEventListener("click", removeNew);
+    newButton.classList.add("hide");
+
+    console.log(task);
+
+    //Ångrar ny todo
+    function removeNew() {
+        newInput.remove();
+        addButton.remove();
+        removeButton.remove();
+        newButton.classList.remove("hide");
+        
+    }
+}
+
+class Todo {
+    constructor(checkbox, userInput, removeButton) {
+        this.checkbox = checkbox;
+        this.userInput = userInput;
+        this.removeButton = removeButton;
+    }
+}
+
+let task = new Todo();
+
+function commitTask() {
+    console.log(task);
+}
+
 
 //Öppna ny todo-modul
-function newTodo() {
+/* function newTodo() {
     //Skapar input-fält
     let newInput = document.createElement("input");
     addTaskSection.appendChild(newInput);
@@ -111,7 +158,7 @@ function newTodo() {
         }
         
     }
-}
+} */
 
 
 
