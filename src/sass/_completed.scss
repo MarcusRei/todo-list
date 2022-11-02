@@ -13,8 +13,16 @@
   .completed-task {
     display:flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 1em;
     text-decoration: line-through;
     color: grey;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 1em;
   }
 }
 
