@@ -51,13 +51,13 @@ function addTaskToOngoing() {
     ongoingTasks.push(newTask);
     commitTask();
 }
-
+debugger
 function commitTask() {
 
     for (let i = 0; i < ongoingTasks.length; i++) {
         console.log();
     
-        if (ongoingTasks[i] = false) {
+        if (ongoingTasks[i].onList = false) {
             //Skapar behållare (ongoing-task)
             let newOngoingTask = document.createElement("article");
             newOngoingTask.className = "ongoing-task";
@@ -93,6 +93,8 @@ function commitTask() {
                 checkbox.remove();
                 newOngoingTask.remove();
             }
+
+            ongoingTasks[i].onList = true;
             
         }
 
