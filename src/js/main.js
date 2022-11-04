@@ -1,119 +1,85 @@
-let newButton = document.getElementById("new-btn");
-let addTaskSection = document.getElementById("add-task");
+let ListElement = document.getElementById("ongoing-tasks-container");
+let newTaskButton = document.getElementById("create-btn");
+let userInput = document.getElementById("input-field");
 
-newButton.addEventListener("click", newTodo);
+newTaskButton.addEventListener("click", createNewTask);
 
-//Öppna ny todo-modul
-function newTodo() {
-    //Skapar input-fält
-    let newInput = document.createElement("input");
-    addTaskSection.appendChild(newInput);
+let taskList = [
+  { userInput: "Mata hunden", isCompleted: false, onList: false },
+  { userInput: "Mata katten", isCompleted: false, onList: false },
+  { userInput: "Hälsa på grannen", isCompleted: false, onList: false },
+];
 
-    //Skapar Lägg till-knapp
-    let addButton = document.createElement("button");
-    addButton.innerText = "Lägg till";
-    addTaskSection.appendChild(addButton)
-    addButton.className = "add-btn";
-    addButton.addEventListener("click", commitTask);
+createHTML();
 
-    //Skapar ta bort-knapp
+function createHTML() {
+  for (let i = 0; i < taskList.length; i++) {
+    let taskElement = document.createElement("li");
+    let doneButton = document.createElement("button");
     let removeButton = document.createElement("button");
-    removeButton.innerText = "Ångra";
-    addTaskSection.appendChild(removeButton);
-    removeButton.className = "remove-btn";
-    removeButton.addEventListener("click", removeNew);
-    newButton.classList.add("hide");
+    removeButton.innerText = "Ta bort";
+    removeButton.addEventListener("click", removeTask);
+    doneButton.innerText = "Klar";
+    doneButton.className = "complete-task";
 
-    //Ångrar ny todo
-    function removeNew() {
-        newInput.remove();
-        addButton.remove();
-        removeButton.remove();
-        newButton.classList.remove("hide");
-        
+    if (taskList[i].onList == false) {
+      taskElement.innerText = taskList[i].userInput;
+      taskElement.className = "ongoing-task";
+      removeButton.className = "remove-btn";
+      taskElement.appendChild(removeButton);
+      ListElement.appendChild(taskElement);
+      taskElement.appendChild(doneButton);
+      taskElement.appendChild(removeButton);
+      doneButton.addEventListener("click", completeTask);
+      taskList[i].onList = true;
     }
 
-    //Skapar task i ongoing
-    function commitTask() {
+    function completeTask() {
+      taskList[i].isCompleted = true;
+      console.log(taskList[i]);
+      doneButton.removeEventListener("click", completeTask);
+      doneButton.addEventListener("click", makeOngoing);
 
-        //Förhindrar tomma tasks
-        if (newInput.value != "") {
-
-            //Skapar och lägger till ny ongoing task
-            let newOngoingTask = document.createElement("article");
-            newOngoingTask.className = "ongoing-task";
-            let ongoingTaskSection = document.getElementById("ongoing-tasks-container");
-            ongoingTaskSection.appendChild(newOngoingTask);
-    
-             //Lägger till checkbox
-            let checkbox = document.createElement("input");
-            checkbox.setAttribute("type", "checkbox");
-            newOngoingTask.appendChild(checkbox);
-            checkbox.addEventListener("click", checkboxStatus);
-    
-            //Lägger till faktisk text
-            let userInput = newInput.value;
-            let userInputElement = document.createElement("p");
-            userInputElement.className = "user-text"
-            userInputElement.innerText = userInput;
-            newOngoingTask.appendChild(userInputElement);
-            //Nollar input-fältet
-            newInput.value = "";
-
-            //Lägger till Ta bort-knapp
-            let removeOngoingTaskButton = document.createElement("button");
-            removeOngoingTaskButton.innerText = "Ta bort";
-            removeOngoingTaskButton.className = "remove-btn";
-            newOngoingTask.appendChild(removeOngoingTaskButton);
-            removeOngoingTaskButton.addEventListener("click", removeOngoingTask);
-
-            //Kollar om checkboxen är iklickad
-            function checkboxStatus() {
-                if (checkbox.checked === true) {
-                    moveToCompleted();
-                } else {
-                    moveToOngoing();
-                }
-            }
-
-            //Tar bort pågående task
-            function removeOngoingTask() {
-                removeOngoingTaskButton.remove();
-                userInputElement.remove();
-                checkbox.remove();
-                newOngoingTask.remove();
-            }
-
-            //Flyttar till completed
-            function moveToCompleted() {
-                console.log(checkbox.checked);
-                let completedTasks = document.getElementById("completed-tasks-container");
-                completedTasks.appendChild(newOngoingTask);
-                newOngoingTask.className = "completed-task";
-                removeOngoingTaskButton.remove();
-            }
-
-            //Flyttar tillbaka till ongoing
-            function moveToOngoing() {
-                let completedTask = document.querySelector(".completed-task");
-                ongoingTaskSection.appendChild(completedTask);
-                completedTask.className = "ongoing-task";
-
-                //Lägger till ny Ta bort-knapp
-                removeOngoingTaskButton.innerText = "Ta bort";
-                removeOngoingTaskButton.className = "remove-btn";
-                newOngoingTask.appendChild(removeOngoingTaskButton);
-                removeOngoingTaskButton.addEventListener("click", removeOngoingTask); 
-            }
-
-            
-
-        }
-        
+      if (taskList[i].isCompleted === true) {
+        taskElement.className = "completed-task";
+        doneButton.innerText = "Ångra";
+        doneButton.className = "undo-btn";
+      }
     }
+
+    function makeOngoing() {
+      taskList[i].isCompleted = false;
+      console.log(taskList[i]);
+
+      if (taskList[i].isCompleted === false) {
+        taskElement.className = "ongoing-task";
+        doneButton.innerText = "Klar";
+        doneButton.className = "complete-task";
+        doneButton.removeEventListener("click", makeOngoing);
+        doneButton.addEventListener("click", completeTask);
+      }
+    }
+
+    function removeTask() {
+      taskList.splice(taskList[i], 1);
+      ListElement.innerHTML = "";
+      console.log(taskList);
+      for (let i = 0; i < taskList.length; i++) {
+        taskList[i].onList = false;
+      }
+      createHTML();
+    }
+  }
 }
 
+function createNewTask() {
+  if (userInput.value == "") {
+    alert("Du måste skriva något i fältet!");
+  }
 
+  let task = { userInput: userInput.value, isCompleted: false, onList: false };
+  taskList.push(task);
+  console.log(taskList);
 
-
-
+  createHTML();
+}

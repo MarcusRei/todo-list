@@ -1,10 +1,14 @@
+@use "variables" as var;
+
 #add-task {
-    display: flex;
-    flex-direction: row;
-    gap: 1em;
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  padding: 1em;
+  background-color: var.$color-accent-blue;
+  border-radius: 5px;
 }
 
-
 .hide {
-    display: none;
+  display: none;
 }

@@ -6,9 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To do Lists</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script
+      src="https://kit.fontawesome.com/9936055087.js"
+      crossorigin="anonymous"
+    ></script>
 
     <link rel="stylesheet" href="./sass/main.scss" />
 
@@ -18,26 +26,12 @@
     <header>
       <h1>To do</h1>
     </header>
-    
+
     <section id="add-task">
-      <button id="new-btn">Ny to-do</button>
-
+      <input id="input-field" type="text" />
+      <button id="create-btn">Skapa Todo</button>
     </section>
 
-    <section id="ongoing-tasks-container">
-      <h2>Pågående</h2>
-      <!-- <article class="ongoing-task placeholder">
-        <input class="checkbox" type="checkbox">
-        <p class="user-text">Ongoing placeholder</p>
-        <button class="remove-btn">Ta bort</button>
-      </article> -->
-    </section>
-
-    <section id="completed-tasks-container">
-      <h2>Avklarade</h2>
-      <!-- <article class="completed-task placeholder">
-        Completed Placeholder
-      </article> -->
-    </section>
+    <ul id="ongoing-tasks-container"></ul>
   </body>
 </html>
