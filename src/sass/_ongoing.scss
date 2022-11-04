@@ -3,9 +3,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  border: 2px solid black;
+  padding-right: 0;
   padding: 2em;
   width: 80%;
+  gap: 0.5em;
 
   .ongoing-task {
     display: flex;
@@ -13,7 +14,17 @@
     justify-content: flex-start;
     width: 100%;
     gap: 1em;
-    background-color: grey;
+    background-color: rgba(128, 128, 128, 0.3);
+    border-radius: 5px;
     padding: 1em;
+    position: relative;
+  }
+
+  .ongoing-task:hover {
+    background-color: rgba(172, 172, 172, 0.3);
+  }
+
+  .ongoing-text {
+    text-decoration: none;
   }
 }

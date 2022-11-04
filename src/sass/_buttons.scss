@@ -1,21 +1,17 @@
 @use "variables" as var;
 @use "mixins" as mix;
 
-#new-btn {
-  border: none;
-  border-radius: 5px;
-  height: 2em;
-  width: 6em;
-  font-weight: bold;
-}
-
-.complete-task {
+.complete-task-btn {
   background-color: var.$color-accent-blue;
   border: none;
   border-radius: 5px;
   font-size: 1em;
   height: 2em;
   width: 6em;
+}
+
+.complete-task-btn:hover {
+  cursor: pointer;
 }
 
 .undo-btn {
@@ -26,4 +22,50 @@
   font-size: 1em;
   height: 2em;
   width: 6em;
+}
+
+.undo-btn:hover {
+  cursor: pointer;
+}
+
+.remove-btn {
+  text-decoration: none;
+  background-color: var.$color-accent-red;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  height: 2em;
+  width: 6em;
+  position: absolute;
+  right: 2em;
+}
+
+.remove-btn:hover {
+  cursor: pointer;
+}
+
+#create-btn {
+  background-color: var.$color-accent-blue;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  padding: 0.5em;
+}
+
+#create-btn:hover {
+  background-color: #72e1c7;
+  cursor: pointer;
+}
+
+#sort-btn {
+  background-color: var.$color-accent-blue;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  padding: 0.5em;
+}
+
+#sort-btn:hover {
+  background-color: #72e1c7;
+  cursor: pointer;
 }
