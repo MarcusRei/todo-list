@@ -12,6 +12,8 @@ let taskList = [
   { userInput: "Hälsa på grannen", isCompleted: false, onList: false },
 ];
 
+getFromLocalStorage();
+
 createHTML();
 
 function createHTML() {
@@ -77,6 +79,7 @@ function createHTML() {
       createHTML();
     }
   }
+  putInLocalStorage();
 }
 
 function createNewTask() {
@@ -91,6 +94,8 @@ function createNewTask() {
     taskList.push(task);
     console.log(taskList);
     userInput.value = "";
+    putInLocalStorage();
+    getFromLocalStorage();
 
     createHTML();
   }
@@ -108,5 +113,18 @@ function sortAlphabetically() {
   for (let i = 0; i < taskList.length; i++) {
     taskList[i].onList = false;
   }
+  putInLocalStorage();
+  getFromLocalStorage();
   createHTML();
+}
+
+function putInLocalStorage() {
+  localStorage.setItem("taskList", JSON.stringify(taskList));
+}
+//Gav upp på local storage
+function getFromLocalStorage() {
+  let listofStringsFromLS = localStorage.getItem("taskList");
+  let taskListfromLS = JSON.parse(listofStringsFromLS);
+  console.log("Orig", taskList);
+  console.log("from LS", taskList);
 }
