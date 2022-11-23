@@ -6,11 +6,7 @@ let sortButton = document.getElementById("sort-btn");
 newTaskButton.addEventListener("click", createNewTask);
 sortButton.addEventListener("click", sortAlphabetically);
 
-let taskList = [
-  { userInput: "Mata hunden", isCompleted: false, onList: false },
-  { userInput: "Mata katten", isCompleted: false, onList: false },
-  { userInput: "Hälsa på grannen", isCompleted: false, onList: false },
-];
+let taskList = [];
 
 getFromLocalStorage();
 
@@ -121,10 +117,10 @@ function sortAlphabetically() {
 function putInLocalStorage() {
   localStorage.setItem("taskList", JSON.stringify(taskList));
 }
-//Gav upp på local storage
+
 function getFromLocalStorage() {
   let listofStringsFromLS = localStorage.getItem("taskList");
-  let taskListfromLS = JSON.parse(listofStringsFromLS);
+  taskList = JSON.parse(listofStringsFromLS);
   console.log("Orig", taskList);
   console.log("from LS", taskList);
 }
