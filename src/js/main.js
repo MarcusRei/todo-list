@@ -8,9 +8,31 @@ newTaskButton.addEventListener("click", createNewTask);
 
 let taskList = [];
 
+class Task {
+  constructor(userText, Boolean) {
+    this.userText = userText;
+    this.isCompleted = Boolean;
+  }
+}
+
 //getFromLocalStorage();
 
-createHTML();
+//createHTML();
+
+function createNewTask() {
+  //Check if there is input
+  if (userInput.value == "") {
+    alert("Du måste skriva något i fältet!");
+  } else {
+    let task = new Task(userInput.value, false);
+    taskList.push(task);
+    console.log(task);
+
+    userInput.value = "";
+
+    createHTML();
+  }
+}
 
 function createHTML() {
   for (let i = 0; i < taskList.length; i++) {
@@ -40,7 +62,7 @@ function createHTML() {
   putInLocalStorage();
 }
 
-function completeTask() {
+/* function completeTask() {
   taskList[i].isCompleted = true;
   console.log(taskList[i]);
   doneButton.removeEventListener("click", completeTask);
@@ -52,9 +74,9 @@ function completeTask() {
     doneButton.innerText = "Ångra";
     doneButton.className = "undo-btn";
   }
-}
+} */
 
-function makeOngoing() {
+/* function makeOngoing() {
   taskList[i].isCompleted = false;
   console.log(taskList[i]);
 
@@ -66,28 +88,9 @@ function makeOngoing() {
     doneButton.removeEventListener("click", makeOngoing);
     doneButton.addEventListener("click", completeTask);
   }
-}
+} */
 
-function createNewTask() {
-  if (userInput.value == "") {
-    alert("Du måste skriva något i fältet!");
-  } else {
-    let task = {
-      userInput: userInput.value,
-      isCompleted: false,
-      onList: false,
-    };
-    taskList.push(task);
-    console.log(taskList);
-    userInput.value = "";
-    putInLocalStorage();
-    getFromLocalStorage();
-
-    createHTML();
-  }
-}
-
-function removeTask() {
+/* function removeTask() {
   taskList.splice(taskList[i], 1);
   ListElement.innerHTML = "";
   console.log(taskList);
@@ -95,11 +98,11 @@ function removeTask() {
     taskList[i].onList = false;
   }
   createHTML();
-}
+} */
 
 // -------- Sorting ---------
 
-function sortAlphabetically() {
+/* function sortAlphabetically() {
   taskList.sort(function (x, y) {
     let a = x.userInput.toUpperCase(),
       b = y.userInput.toUpperCase();
@@ -114,17 +117,17 @@ function sortAlphabetically() {
   putInLocalStorage();
   getFromLocalStorage();
   createHTML();
-}
+} */
 
 // -------- LS ---------
 
-function putInLocalStorage() {
+/* function putInLocalStorage() {
   localStorage.setItem("taskList", JSON.stringify(taskList));
-}
+} */
 
-function getFromLocalStorage() {
+/* function getFromLocalStorage() {
   let listofStringsFromLS = localStorage.getItem("taskList");
   taskList = JSON.parse(listofStringsFromLS);
   console.log("Orig", taskList);
   console.log("from LS", taskList);
-}
+} */
