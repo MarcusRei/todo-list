@@ -6,8 +6,6 @@ let sortButton = document.getElementById("sort-btn");
 newTaskButton.addEventListener("click", createNewTask);
 //sortButton.addEventListener("click", sortAlphabetically);
 
-let taskList = [];
-
 class Task {
   constructor(userText, Boolean) {
     this.userText = userText;
@@ -15,9 +13,15 @@ class Task {
   }
 }
 
-//getFromLocalStorage();
+let taskList = [];
 
-//createHTML();
+getFromLocalStorage();
+
+if (listFromLS != []) {
+  taskList = listFromLS;
+}
+
+createHTML();
 
 function createNewTask() {
   //Check if there is input
@@ -29,6 +33,7 @@ function createNewTask() {
 
     userInput.value = "";
 
+    putInLocalStorage();
     createHTML();
   }
 }
@@ -67,6 +72,7 @@ function createHTML() {
     taskElement.appendChild(userText);
     taskElement.appendChild(removeButton);
 
+    //APPEND WHOLE TASK
     ListElement.appendChild(taskElement);
 
     checkbox.addEventListener("click", () => {
@@ -78,6 +84,7 @@ function createHTML() {
 function removeTask(taskPos) {
   taskList.splice(taskPos, 1);
 
+  putInLocalStorage();
   createHTML();
 }
 
@@ -89,6 +96,7 @@ function completeTask(checkbox, selectedTask, taskElement, userText) {
 
     taskElement.className = "completed-task";
     userText.className = "completed-text";
+    putInLocalStorage();
   }
 
   if (!checkbox.checked) {
@@ -97,6 +105,7 @@ function completeTask(checkbox, selectedTask, taskElement, userText) {
     console.log("Bör vara ongoing ", selectedTask);
     taskElement.className = "ongoing-task";
     userText.className = "ongoing-text";
+    putInLocalStorage();
   }
 }
 
@@ -121,13 +130,13 @@ function completeTask(checkbox, selectedTask, taskElement, userText) {
 
 // -------- LS ---------
 
-/* function putInLocalStorage() {
+function putInLocalStorage() {
   localStorage.setItem("taskList", JSON.stringify(taskList));
-} */
+}
 
-/* function getFromLocalStorage() {
+function getFromLocalStorage() {
   let listofStringsFromLS = localStorage.getItem("taskList");
-  taskList = JSON.parse(listofStringsFromLS);
-  console.log("Orig", taskList);
-  console.log("from LS", taskList);
-} */
+  listFromLS = JSON.parse(listofStringsFromLS);
+
+  return listFromLS;
+}
