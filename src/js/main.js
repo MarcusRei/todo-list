@@ -29,40 +29,49 @@ function createNewTask() {
     console.log(task);
 
     userInput.value = "";
-
     createHTML();
   }
 }
 
 function createHTML() {
+  //Empties the HTML
+  ListElement.innerHTML = "";
+
   for (let i = 0; i < taskList.length; i++) {
     let taskElement = document.createElement("li");
+    taskElement.className = "ongoing-task";
+
+    console.log(taskList);
+
     let userText = document.createElement("p");
+    userText.innerText = taskList[i].userText;
+    userText.className = "ongoing-text";
+
     let doneButton = document.createElement("button");
-    let removeButton = document.createElement("button");
-    removeButton.innerText = "Ta bort";
-    removeButton.addEventListener("click", removeTask);
     doneButton.innerText = "Klar";
     doneButton.className = "complete-task-btn";
+    //EventListener
+    doneButton.addEventListener("click", () => {
+      completeTask();
+    });
 
-    if (taskList[i].onList == false) {
-      userText.innerText = taskList[i].userInput;
-      userText.className = "ongoing-text";
-      taskElement.className = "ongoing-task";
-      removeButton.className = "remove-btn";
-      taskElement.appendChild(userText);
-      taskElement.appendChild(removeButton);
-      ListElement.appendChild(taskElement);
-      taskElement.appendChild(doneButton);
-      taskElement.appendChild(removeButton);
-      doneButton.addEventListener("click", completeTask);
-      taskList[i].onList = true;
-    }
+    let removeButton = document.createElement("button");
+    removeButton.innerText = "Ta bort";
+    removeButton.className = "remove-btn";
+    //EventListener
+    removeButton.addEventListener("click", () => {
+      removeTask();
+    });
+
+    taskElement.appendChild(userText);
+    taskElement.appendChild(removeButton);
+    taskElement.appendChild(doneButton);
+
+    ListElement.appendChild(taskElement);
   }
-  putInLocalStorage();
 }
 
-/* function completeTask() {
+function completeTask() {
   taskList[i].isCompleted = true;
   console.log(taskList[i]);
   doneButton.removeEventListener("click", completeTask);
@@ -74,9 +83,9 @@ function createHTML() {
     doneButton.innerText = "Ångra";
     doneButton.className = "undo-btn";
   }
-} */
+}
 
-/* function makeOngoing() {
+function makeOngoing() {
   taskList[i].isCompleted = false;
   console.log(taskList[i]);
 
@@ -88,9 +97,9 @@ function createHTML() {
     doneButton.removeEventListener("click", makeOngoing);
     doneButton.addEventListener("click", completeTask);
   }
-} */
+}
 
-/* function removeTask() {
+function removeTask() {
   taskList.splice(taskList[i], 1);
   ListElement.innerHTML = "";
   console.log(taskList);
@@ -98,7 +107,7 @@ function createHTML() {
     taskList[i].onList = false;
   }
   createHTML();
-} */
+}
 
 // -------- Sorting ---------
 
