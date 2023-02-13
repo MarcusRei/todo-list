@@ -26,9 +26,9 @@ function createNewTask() {
   } else {
     let task = new Task(userInput.value, false);
     taskList.push(task);
-    console.log(task);
 
     userInput.value = "";
+
     createHTML();
   }
 }
@@ -45,13 +45,15 @@ function createHTML() {
     userText.innerText = taskList[i].userText;
     userText.className = "ongoing-text";
 
-    let doneButton = document.createElement("button");
-    doneButton.innerText = "Klar";
-    doneButton.className = "complete-task-btn";
-    //EventListener
-    doneButton.addEventListener("click", () => {
-      completeTask();
-    });
+    //CHECKBOX
+    let checkbox = document.createElement("input");
+    checkbox.setAttribute("type", "checkbox");
+
+    if (taskList[i].isCompleted) {
+      checkbox.checked = true;
+      userText.className = "completed-text";
+      taskElement.className = "completed-task";
+    }
 
     let removeButton = document.createElement("button");
     removeButton.innerText = "Ta bort";
@@ -62,10 +64,14 @@ function createHTML() {
     });
 
     taskElement.appendChild(userText);
+    taskElement.appendChild(checkbox);
     taskElement.appendChild(removeButton);
-    taskElement.appendChild(doneButton);
 
     ListElement.appendChild(taskElement);
+
+    checkbox.addEventListener("click", () => {
+      completeTask(checkbox, taskList[i], taskElement, userText);
+    });
   }
 }
 
@@ -75,31 +81,22 @@ function removeTask(taskPos) {
   createHTML();
 }
 
-function completeTask() {
-  taskList[i].isCompleted = true;
-  console.log(taskList[i]);
-  doneButton.removeEventListener("click", completeTask);
-  doneButton.addEventListener("click", makeOngoing);
+function completeTask(checkbox, selectedTask, taskElement, userText) {
+  if (checkbox.checked) {
+    selectedTask.isCompleted = true;
 
-  if (taskList[i].isCompleted === true) {
+    console.log("bör vara complete ", selectedTask);
+
     taskElement.className = "completed-task";
     userText.className = "completed-text";
-    doneButton.innerText = "Ångra";
-    doneButton.className = "undo-btn";
   }
-}
 
-function makeOngoing() {
-  taskList[i].isCompleted = false;
-  console.log(taskList[i]);
+  if (!checkbox.checked) {
+    selectedTask.isCompleted = false;
 
-  if (taskList[i].isCompleted === false) {
+    console.log("Bör vara ongoing ", selectedTask);
     taskElement.className = "ongoing-task";
     userText.className = "ongoing-text";
-    doneButton.innerText = "Klar";
-    doneButton.className = "complete-task-btn";
-    doneButton.removeEventListener("click", makeOngoing);
-    doneButton.addEventListener("click", completeTask);
   }
 }
 
