@@ -4,7 +4,7 @@ let userInput = document.getElementById("input-field");
 let sortButton = document.getElementById("sort-btn");
 
 newTaskButton.addEventListener("click", createNewTask);
-//sortButton.addEventListener("click", sortAlphabetically);
+sortButton.addEventListener("click", sortAlphabetically);
 
 class Task {
   constructor(userText, Boolean) {
@@ -111,22 +111,16 @@ function completeTask(checkbox, selectedTask, taskElement, userText) {
 
 // -------- Sorting ---------
 
-/* function sortAlphabetically() {
+function sortAlphabetically() {
   taskList.sort(function (x, y) {
-    let a = x.userInput.toUpperCase(),
-      b = y.userInput.toUpperCase();
+    let a = x.userText.toUpperCase(),
+      b = y.userText.toUpperCase();
     return a == b ? 0 : a > b ? 1 : -1;
   });
 
-  ListElement.innerHTML = "";
-  console.log(taskList);
-  for (let i = 0; i < taskList.length; i++) {
-    taskList[i].onList = false;
-  }
   putInLocalStorage();
-  getFromLocalStorage();
   createHTML();
-} */
+}
 
 // -------- LS ---------
 
