@@ -63,8 +63,8 @@ function createHTML() {
       removeTask(i);
     });
 
-    taskElement.appendChild(userText);
     taskElement.appendChild(checkbox);
+    taskElement.appendChild(userText);
     taskElement.appendChild(removeButton);
 
     ListElement.appendChild(taskElement);
