@@ -4,11 +4,11 @@ let userInput = document.getElementById("input-field");
 let sortButton = document.getElementById("sort-btn");
 
 newTaskButton.addEventListener("click", createNewTask);
-sortButton.addEventListener("click", sortAlphabetically);
+//sortButton.addEventListener("click", sortAlphabetically);
 
 let taskList = [];
 
-getFromLocalStorage();
+//getFromLocalStorage();
 
 createHTML();
 
@@ -36,46 +36,36 @@ function createHTML() {
       doneButton.addEventListener("click", completeTask);
       taskList[i].onList = true;
     }
-
-    function completeTask() {
-      taskList[i].isCompleted = true;
-      console.log(taskList[i]);
-      doneButton.removeEventListener("click", completeTask);
-      doneButton.addEventListener("click", makeOngoing);
-
-      if (taskList[i].isCompleted === true) {
-        taskElement.className = "completed-task";
-        userText.className = "completed-text";
-        doneButton.innerText = "Ångra";
-        doneButton.className = "undo-btn";
-      }
-    }
-
-    function makeOngoing() {
-      taskList[i].isCompleted = false;
-      console.log(taskList[i]);
-
-      if (taskList[i].isCompleted === false) {
-        taskElement.className = "ongoing-task";
-        userText.className = "ongoing-text";
-        doneButton.innerText = "Klar";
-        doneButton.className = "complete-task-btn";
-        doneButton.removeEventListener("click", makeOngoing);
-        doneButton.addEventListener("click", completeTask);
-      }
-    }
-
-    function removeTask() {
-      taskList.splice(taskList[i], 1);
-      ListElement.innerHTML = "";
-      console.log(taskList);
-      for (let i = 0; i < taskList.length; i++) {
-        taskList[i].onList = false;
-      }
-      createHTML();
-    }
   }
   putInLocalStorage();
+}
+
+function completeTask() {
+  taskList[i].isCompleted = true;
+  console.log(taskList[i]);
+  doneButton.removeEventListener("click", completeTask);
+  doneButton.addEventListener("click", makeOngoing);
+
+  if (taskList[i].isCompleted === true) {
+    taskElement.className = "completed-task";
+    userText.className = "completed-text";
+    doneButton.innerText = "Ångra";
+    doneButton.className = "undo-btn";
+  }
+}
+
+function makeOngoing() {
+  taskList[i].isCompleted = false;
+  console.log(taskList[i]);
+
+  if (taskList[i].isCompleted === false) {
+    taskElement.className = "ongoing-task";
+    userText.className = "ongoing-text";
+    doneButton.innerText = "Klar";
+    doneButton.className = "complete-task-btn";
+    doneButton.removeEventListener("click", makeOngoing);
+    doneButton.addEventListener("click", completeTask);
+  }
 }
 
 function createNewTask() {
@@ -97,6 +87,18 @@ function createNewTask() {
   }
 }
 
+function removeTask() {
+  taskList.splice(taskList[i], 1);
+  ListElement.innerHTML = "";
+  console.log(taskList);
+  for (let i = 0; i < taskList.length; i++) {
+    taskList[i].onList = false;
+  }
+  createHTML();
+}
+
+// -------- Sorting ---------
+
 function sortAlphabetically() {
   taskList.sort(function (x, y) {
     let a = x.userInput.toUpperCase(),
@@ -113,6 +115,8 @@ function sortAlphabetically() {
   getFromLocalStorage();
   createHTML();
 }
+
+// -------- LS ---------
 
 function putInLocalStorage() {
   localStorage.setItem("taskList", JSON.stringify(taskList));
