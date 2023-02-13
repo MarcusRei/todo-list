@@ -41,8 +41,6 @@ function createHTML() {
     let taskElement = document.createElement("li");
     taskElement.className = "ongoing-task";
 
-    console.log(taskList);
-
     let userText = document.createElement("p");
     userText.innerText = taskList[i].userText;
     userText.className = "ongoing-text";
@@ -60,7 +58,7 @@ function createHTML() {
     removeButton.className = "remove-btn";
     //EventListener
     removeButton.addEventListener("click", () => {
-      removeTask();
+      removeTask(i);
     });
 
     taskElement.appendChild(userText);
@@ -69,6 +67,12 @@ function createHTML() {
 
     ListElement.appendChild(taskElement);
   }
+}
+
+function removeTask(taskPos) {
+  taskList.splice(taskPos, 1);
+
+  createHTML();
 }
 
 function completeTask() {
@@ -97,16 +101,6 @@ function makeOngoing() {
     doneButton.removeEventListener("click", makeOngoing);
     doneButton.addEventListener("click", completeTask);
   }
-}
-
-function removeTask() {
-  taskList.splice(taskList[i], 1);
-  ListElement.innerHTML = "";
-  console.log(taskList);
-  for (let i = 0; i < taskList.length; i++) {
-    taskList[i].onList = false;
-  }
-  createHTML();
 }
 
 // -------- Sorting ---------
