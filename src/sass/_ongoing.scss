@@ -8,7 +8,7 @@
   width: 80%;
   gap: 0.5em;
 
-  .ongoing-task {
+  .ongoing {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -20,7 +20,7 @@
     position: relative;
   }
 
-  .ongoing-task:hover {
+  .ongoing:hover {
     background-color: rgba(172, 172, 172, 0.3);
   }
 

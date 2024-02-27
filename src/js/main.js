@@ -1,130 +1,161 @@
-let ListElement = document.getElementById("ongoing-tasks-container");
+let listElement = document.getElementById("ongoing-tasks-container");
 let newTaskButton = document.getElementById("create-btn");
 let userInput = document.getElementById("input-field");
-let sortButton = document.getElementById("sort-btn");
+let sortDButton = document.getElementById("sort-desc-btn");
+let sortAButton = document.getElementById("sort-asc-btn");
 
 newTaskButton.addEventListener("click", createNewTask);
-sortButton.addEventListener("click", sortAlphabetically);
+sortDButton.addEventListener("click", sortDescending);
+sortAButton.addEventListener("click", sortAscending);
 
-let taskList = [
-  { userInput: "Mata hunden", isCompleted: false, onList: false },
-  { userInput: "Mata katten", isCompleted: false, onList: false },
-  { userInput: "Hälsa på grannen", isCompleted: false, onList: false },
-];
+let taskList = getFromLocalStorage();
 
-getFromLocalStorage();
+console.log("taskList", taskList);
 
 createHTML();
 
 function createHTML() {
   for (let i = 0; i < taskList.length; i++) {
-    let taskElement = document.createElement("li");
-    let userText = document.createElement("p");
-    let doneButton = document.createElement("button");
-    let removeButton = document.createElement("button");
-    removeButton.innerText = "Ta bort";
-    removeButton.addEventListener("click", removeTask);
-    doneButton.innerText = "Klar";
-    doneButton.className = "complete-task-btn";
-
-    if (taskList[i].onList == false) {
-      userText.innerText = taskList[i].userInput;
-      userText.className = "ongoing-text";
-      taskElement.className = "ongoing-task";
-      removeButton.className = "remove-btn";
-      taskElement.appendChild(userText);
-      taskElement.appendChild(removeButton);
-      ListElement.appendChild(taskElement);
-      taskElement.appendChild(doneButton);
-      taskElement.appendChild(removeButton);
-      doneButton.addEventListener("click", completeTask);
-      taskList[i].onList = true;
-    }
-
-    function completeTask() {
-      taskList[i].isCompleted = true;
-      console.log(taskList[i]);
-      doneButton.removeEventListener("click", completeTask);
-      doneButton.addEventListener("click", makeOngoing);
-
-      if (taskList[i].isCompleted === true) {
-        taskElement.className = "completed-task";
-        userText.className = "completed-text";
-        doneButton.innerText = "Ångra";
-        doneButton.className = "undo-btn";
-      }
-    }
-
-    function makeOngoing() {
-      taskList[i].isCompleted = false;
-      console.log(taskList[i]);
-
-      if (taskList[i].isCompleted === false) {
-        taskElement.className = "ongoing-task";
-        userText.className = "ongoing-text";
-        doneButton.innerText = "Klar";
-        doneButton.className = "complete-task-btn";
-        doneButton.removeEventListener("click", makeOngoing);
-        doneButton.addEventListener("click", completeTask);
-      }
-    }
-
-    function removeTask() {
-      taskList.splice(taskList[i], 1);
-      ListElement.innerHTML = "";
-      console.log(taskList);
-      for (let i = 0; i < taskList.length; i++) {
-        taskList[i].onList = false;
-      }
-      createHTML();
+    let task = taskList[i];
+    if (task.isCompleted === true) {
+      createCompletedElement(task, i);
+    } else {
+      createIncompleteElement(task, i);
     }
   }
-  putInLocalStorage();
+  putInLocalStorage(taskList);
+}
+
+function createCompletedElement(task, position) {
+  let taskElement = document.createElement("li");
+  taskElement.className = "completed";
+
+  let userText = document.createElement("p");
+  userText.innerText = task.userInput;
+  userText.className = "completed-text";
+
+  let undoButton = document.createElement("button");
+  undoButton.innerText = "ångra";
+  undoButton.className = "undo-task-btn";
+  undoButton.addEventListener("click", () => {
+    toggleComplete(task);
+  });
+
+  let removeButton = document.createElement("button");
+  removeButton.innerText = "Ta bort";
+  removeButton.className = "remove-btn";
+  removeButton.addEventListener("click", () => {
+    removeTask(position);
+  });
+
+  taskElement.appendChild(undoButton);
+  taskElement.appendChild(userText);
+  taskElement.appendChild(removeButton);
+  listElement.appendChild(taskElement);
+}
+
+function createIncompleteElement(task, position) {
+  let taskElement = document.createElement("li");
+  taskElement.className = "ongoing";
+
+  let userText = document.createElement("p");
+  userText.innerText = task.userInput;
+  userText.className = "ongoing-text";
+
+  let doneButton = document.createElement("button");
+  doneButton.innerText = "Klar";
+  doneButton.className = "complete-task-btn";
+  doneButton.addEventListener("click", () => {
+    toggleComplete(task);
+  });
+
+  let removeButton = document.createElement("button");
+  removeButton.innerText = "Ta bort";
+  removeButton.className = "remove-btn";
+  removeButton.addEventListener("click", () => {
+    removeTask(position);
+  });
+
+  taskElement.appendChild(doneButton);
+  taskElement.appendChild(userText);
+  taskElement.appendChild(removeButton);
+  listElement.appendChild(taskElement);
+}
+
+function toggleComplete(task) {
+  console.log("task", task);
+  if (task.isCompleted === true) {
+    task.isCompleted = false;
+  } else {
+    task.isCompleted = true;
+  }
+
+  listElement.innerHTML = "";
+  createHTML();
+}
+
+function removeTask(position) {
+  console.log(position);
+  let updatedList = taskList.splice(position, 1);
+
+  console.log(updatedList);
+  putInLocalStorage(updatedList);
+  listElement.innerHTML = "";
+  createHTML();
 }
 
 function createNewTask() {
-  if (userInput.value == "") {
+  if (userInput.value === "") {
     alert("Du måste skriva något i fältet!");
   } else {
     let task = {
       userInput: userInput.value,
       isCompleted: false,
-      onList: false,
     };
     taskList.push(task);
     console.log(taskList);
     userInput.value = "";
-    putInLocalStorage();
-    getFromLocalStorage();
+    putInLocalStorage(taskList);
+    listElement.innerHTML = "";
 
     createHTML();
   }
 }
 
-function sortAlphabetically() {
-  taskList.sort(function (x, y) {
-    let a = x.userInput.toUpperCase(),
-      b = y.userInput.toUpperCase();
-    return a == b ? 0 : a > b ? 1 : -1;
-  });
+function sortDescending() {
+  console.log("sort");
+  let sortedList = taskList.sort((a, b) =>
+    a.userInput.toUpperCase() > b.userInput.toUpperCase() ? 1 : -1
+  );
 
-  ListElement.innerHTML = "";
-  console.log(taskList);
-  for (let i = 0; i < taskList.length; i++) {
-    taskList[i].onList = false;
-  }
-  putInLocalStorage();
-  getFromLocalStorage();
+  putInLocalStorage(sortedList);
+  listElement.innerHTML = "";
   createHTML();
 }
 
-function putInLocalStorage() {
-  localStorage.setItem("taskList", JSON.stringify(taskList));
+function sortAscending() {
+  console.log("sort");
+  let sortedList = taskList.sort((a, b) =>
+    a.userInput.toUpperCase() < b.userInput.toUpperCase() ? 1 : -1
+  );
+
+  putInLocalStorage(sortedList);
+  listElement.innerHTML = "";
+  createHTML();
 }
-//Gav upp på local storage
+
+function putInLocalStorage(list) {
+  localStorage.setItem("taskList", JSON.stringify(list));
+}
+
 function getFromLocalStorage() {
   let listofStringsFromLS = localStorage.getItem("taskList");
   let taskListfromLS = JSON.parse(listofStringsFromLS);
-  console.log("Orig", taskList);
-  console.log("from LS", taskList);
+  console.log("from LS", taskListfromLS);
+
+  if (taskListfromLS !== null) {
+    return taskListfromLS;
+  } else {
+    return [];
+  }
 }

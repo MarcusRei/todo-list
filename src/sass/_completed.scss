@@ -1,6 +1,6 @@
 @use "variables" as var;
 
-.completed-task {
+.completed {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -12,7 +12,7 @@
   position: relative;
 }
 
-.completed-task:hover {
+.completed:hover {
   background-color: rgba(2, 164, 2, 0.3);
 }
 

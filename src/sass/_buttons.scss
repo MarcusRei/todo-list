@@ -12,11 +12,12 @@
 
 .complete-task-btn:hover {
   cursor: pointer;
+  background-color: var.$color-hover-blue;
 }
 
-.undo-btn {
+.undo-task-btn {
   text-decoration: none;
-  background-color: var.$color-accent-red;
+  background-color: rgb(196, 107, 107);
   border: none;
   border-radius: 5px;
   font-size: 1em;
@@ -24,8 +25,9 @@
   width: 6em;
 }
 
-.undo-btn:hover {
+.undo-task-btn:hover {
   cursor: pointer;
+  background-color: var.$color-hover-red;
 }
 
 .remove-btn {
@@ -42,6 +44,7 @@
 
 .remove-btn:hover {
   cursor: pointer;
+  background-color: var.$color-hover-accent-red;
 }
 
 #create-btn {
@@ -57,7 +60,8 @@
   cursor: pointer;
 }
 
-#sort-btn {
+#sort-desc-btn,
+#sort-asc-btn {
   background-color: var.$color-accent-blue;
   border: none;
   border-radius: 5px;
